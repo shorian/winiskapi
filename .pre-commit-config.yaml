@@ -1,0 +1,28 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: check-added-large-files
+        stages: [push]
+    -   id: detect-private-key
+        stages: [push]
+    -   id: requirements-txt-fixer
+-   repo: https://github.com/psf/black
+    rev: 22.1.0
+    hooks:
+    - id: black
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+    - id: flake8
+      args: [ --extend-ignore=E,W ]
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.2.3
+    hooks:
+    -   id: python-safety-dependencies-check
+        stages: [push]
+-   repo: https://github.com/thibaudcolas/curlylint
+    rev: v0.13.0
+    hooks:
+    -   id: curlylint
