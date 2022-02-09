@@ -11,12 +11,12 @@ repos:
 -   repo: https://github.com/psf/black
     rev: 22.1.0
     hooks:
-    - id: black
+    -   id: black
 -   repo: https://gitlab.com/pycqa/flake8
     rev: 3.9.2
     hooks:
-    - id: flake8
-      args: [ --extend-ignore=E,W ]
+    -   id: flake8
+        args: [ --extend-ignore=E,W ]
 -   repo: https://github.com/Lucas-C/pre-commit-hooks-safety
     rev: v1.2.3
     hooks:
