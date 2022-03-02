@@ -7,7 +7,7 @@ def test_app_exists():
 
 
 def test_config():
-    assert not create_app("default").testing
+    assert not create_app("production").testing
     assert create_app("testing").testing
 
 

@@ -1,10 +1,18 @@
 from flask import Flask
-from config import config
+from flask_sqlalchemy import SQLAlchemy
+from config import Config
 
 
-def create_app(config_name):
-    app = Flask(__name__)
-    app.config.from_object(config[config_name])
+db = SQLAlchemy()
+
+
+def create_app(env):  # testing, development, or production
+    app = Flask(__name__, instance_relative_config=True)
+
+    app.config.from_object(Config)
+    app.config.from_pyfile(f"{env}.py")
+
+    db.init_app(app)
 
     from winiskapi.main.routes import main
     from winiskapi.auth.routes import auth

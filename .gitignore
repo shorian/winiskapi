@@ -1,4 +1,3 @@
-/venv/
 /.bandit
 .idea
 /instance/
@@ -6,3 +5,4 @@
 */__pycache__/
 *.pyc
 /winiskapi/static/winiskapilogo.svg
+/winiskapi/instance/
