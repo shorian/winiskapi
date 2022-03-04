@@ -7,8 +7,9 @@ def test_app_exists():
 
 
 def test_config():
-    assert not create_app("production").testing
-    assert create_app("testing").testing
+    app = create_app()
+    assert app.config["DEBUG"] == True
+    assert app.config["SECRET_KEY"] == "my dev key"
 
 
 def test_home(client):

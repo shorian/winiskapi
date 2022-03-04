@@ -4,11 +4,11 @@ from winiskapi import create_app
 
 @pytest.fixture
 def app():
-    app = create_app("testing")
-    # import and create db
-    return app
+    app = create_app(cfg="testing")
+
+    yield app
 
 
 @pytest.fixture
 def client(app):
-    return app.test_client()
+    yield app.test_client()
