@@ -2,17 +2,15 @@ from flask import current_app
 from winiskapi import create_app
 
 
-def test_app_exists():
+def test_AppExists():
     assert current_app is not None
 
 
-def test_config():
+def test_DefaultConfigIsDev():
     app = create_app()
-    assert app.config["DEBUG"] == True
-    assert app.config["SECRET_KEY"] == "my dev key"
+    assert app.config["DEBUG"] == True and app.config["SECRET_KEY"] == "my dev key"
 
 
-def test_home(client):
+def test_HomeRouteExists(client):
     response = client.get("/")
-    assert response.status_code == 200
-    assert b"Welcome to Winiskapi!" in response.data
+    assert response.status_code == 200 and b"Welcome to Winiskapi!" in response.data

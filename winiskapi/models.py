@@ -1,16 +1,17 @@
 from winiskapi import db, login_manager, argon2
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 
 class User(UserMixin, db.Model):  # add UserMixin later
     __tablename__ = "users"
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4())
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email = db.Column(db.String(120), unique=True, index=True)
     nickname = db.Column(db.String(30))
     pw_hash = db.Column(db.String())
-    date_created = db.Column(db.TIMESTAMP())
+    date_created = db.Column(db.TIMESTAMP, default=func.now())
 
     @property
     def password(self):

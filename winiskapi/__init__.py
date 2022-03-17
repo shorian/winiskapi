@@ -4,12 +4,14 @@ from flask_migrate import Migrate
 from winiskapi.config import Config
 from flask_login import LoginManager
 from flask_argon2 import Argon2
+from flask_debugtoolbar import DebugToolbarExtension
 
 db = SQLAlchemy()
 migrate = Migrate()
 argon2 = Argon2()
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"
+debug_toolbar = DebugToolbarExtension()
 
 
 def create_app(cfg="development"):  # testing, development, or production
@@ -22,6 +24,7 @@ def create_app(cfg="development"):  # testing, development, or production
     migrate.init_app(app, db)
     argon2.init_app(app)
     login_manager.init_app(app)
+    debug_toolbar.init_app(app)
 
     from winiskapi.main.routes import main
     from winiskapi.auth.routes import auth
