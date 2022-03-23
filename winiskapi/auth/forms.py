@@ -1,15 +1,15 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, StringField, PasswordField, SubmitField, EmailField
-from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
+from wtforms.validators import InputRequired, Email, Length, EqualTo, ValidationError
 from winiskapi.models import User
 
 
 class RegistrationForm(FlaskForm):
-    email = EmailField("Email", validators=[DataRequired()])
-    nickname = StringField("Nickname", validators=[DataRequired(), Length(max=30)])
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=6)])
+    email = EmailField("Email", validators=[InputRequired()])
+    nickname = StringField("Nickname", validators=[InputRequired(), Length(max=30)])
+    password = PasswordField("Password", validators=[InputRequired(), Length(min=6)])
     confirm_password = PasswordField(
-        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
+        "Confirm Password", validators=[InputRequired(), EqualTo("password")]
     )
     submit = SubmitField("Sign Up")
 
@@ -21,7 +21,20 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = EmailField("Email", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    email = EmailField("Email", validators=[InputRequired(), Email()])
+    password = PasswordField("Password", validators=[InputRequired()])
     remember = BooleanField("Remember Me")
     submit = SubmitField("Sign In")
+
+
+class RequestResetForm(FlaskForm):
+    email = EmailField("Email", validators=[InputRequired(), Email()])
+    submit = SubmitField("Reset Password")
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField("Password", validators=[InputRequired(), Length(min=6)])
+    confirm_password = PasswordField(
+        "Confirm Password", validators=[InputRequired(), EqualTo("password")]
+    )
+    submit = SubmitField("Reset Password")

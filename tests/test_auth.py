@@ -1,22 +1,14 @@
 import pytest
+from freezegun import freeze_time
+from datetime import datetime, timedelta
 from winiskapi.models import User
 from flask_login import current_user
-
-
-def register(client, email, nickname, password):
-    reg_data = {
-        "email": email,
-        "nickname": nickname,
-        "password": password,
-        "confirm_password": password,
-    }
-    response = client.post("/register", data=reg_data)
-    return response
+from conftest import login, register, messages
 
 
 @pytest.mark.usefixtures("client", "db_session")
 class TestRegistration:
-    def test_RegistrationRouteExists(self, client):
+    def test_GetRegistrationRoute(self, client):
         assert client.get("/register").status_code == 200
 
     def test_RegistrationSucceeds(self, client):
@@ -34,32 +26,22 @@ class TestRegistration:
         assert b"Email already in use." in response.data
 
 
-def login(client, email, password, remember=False):
-    response = client.post(
-        "/login",
-        data={
-            "email": email,
-            "password": password,
-            "remember": remember,
-        },
-    )
-    return response
-
-
 @pytest.mark.usefixtures("client", "db_session")
 class TestLogin:
-    def test_LoginRouteExists(self, client):
+    def test_GetLoginRoute(self, client):
         assert client.get("/login").status_code == 200
 
     def test_LoginSucceeds(self, client):
         """Login succeeds when an existing user provides the correct username and password, returns redirect"""
         with client:
-            response = login(client, "testuser@example.com", "my-testing-password")
+            response = login(client)
             assert response.status_code == 302 and current_user.is_authenticated
 
     def test_LoginFailsWithBadEmail(self, client):
         with client:
-            response = login(client, "notauser@example.com", "bad_password")
+            response = login(
+                client, email="notauser@example.com", password="my_password"
+            )
             assert (
                 b"Invalid email or password." in response.data
                 and not current_user.is_authenticated
@@ -67,7 +49,7 @@ class TestLogin:
 
     def test_LoginFailsWithBadPassword(self, client):
         with client:
-            response = login(client, "testuser@example.com", "bad_password")
+            response = login(client, password="bad_password")
             assert (
                 b"Invalid email or password." in response.data
                 and not current_user.is_authenticated
@@ -76,9 +58,44 @@ class TestLogin:
 
 def test_LogoutSucceeds(client):
     with client:
-        login(client, "testuser@example.com", "my-testing-password")
+        login(client)
         assert current_user.is_authenticated
         assert (
             client.get("/logout").status_code == 302
             and not current_user.is_authenticated
         )
+
+
+@pytest.mark.usefixtures("client", "db_session")
+class TestPasswordReset:
+    def test_GetResetRequestRoute(self, client):
+        assert client.get("/reset_password").status_code == 200
+
+    def test_PostResetRequest(self, client):
+        response = client.post(
+            "/reset_password",
+            data={"email": "testuser@example.com"},
+            follow_redirects=True,
+        )
+        assert b"If an account is associated with that email address" in response.data
+        assert "reset your password" in messages[0]
+
+    def test_GoodResetTokenSucceeds(self, client):
+        user = User.query.filter_by(email="testuser@example.com").first()
+        token = user.generate_reset_token()
+        assert user.reset_password(token, "my-new-password")
+
+        with client:
+            login(client, password="my-new-password")
+            assert current_user.is_authenticated
+
+    def test_ExpiredResetTokenFails(self, client):
+        with freeze_time(datetime.now()) as current_time:
+            user = User.query.filter_by(email="testuser@example.com").first()
+            token = user.generate_reset_token()
+            current_time.tick(delta=timedelta(minutes=61))
+            assert not user.reset_password(token, "my-new-password")
+
+        with client:
+            login(client, password="my-new-password")
+            assert not current_user.is_authenticated
