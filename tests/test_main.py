@@ -6,8 +6,9 @@ def test_AppExists():
     assert current_app is not None
 
 
-def test_ConfigIsTesting():
-    assert current_app.config["TESTING"] == True
+def test_ConfigIsTesting(client):
+    with client:
+        assert current_app.config["TESTING"] == True
 
 
 def test_DefaultConfigIsDev():

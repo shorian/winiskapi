@@ -28,7 +28,6 @@ messages = []
 
 
 def dummy_send(msg):
-    messages.clear()
     messages.append(msg.as_string())
 
 
