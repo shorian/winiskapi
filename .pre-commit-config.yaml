@@ -32,8 +32,8 @@ repos:
     hooks:
     -   id: python-safety-dependencies-check
         stages: [push]
--   repo: https://github.com/PyCQA/bandit
-    rev: 1.7.4
-    hooks:
-    -   id: bandit
-        stages: [push]
+#-   repo: https://github.com/PyCQA/bandit
+#    rev: 1.7.4
+#    hooks:
+#    -   id: bandit
+#        stages: [push]
