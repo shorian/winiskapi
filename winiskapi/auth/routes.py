@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request
-from flask_login import login_user, logout_user, login_required, current_user
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+
 from winiskapi import db, mail
 from winiskapi.models import User
-from .forms import RegistrationForm, LoginForm, RequestResetForm, ResetPasswordForm
 
+from .forms import LoginForm, RegistrationForm, RequestResetForm, ResetPasswordForm
 
 auth = Blueprint("auth", __name__)
 
@@ -15,13 +16,13 @@ def register():  # put application's code here
         # noinspection PyArgumentList
         user = User(
             email=form.email.data,
-            nickname=form.nickname.data,
+            username=form.username.data,
             password=form.password.data,
         )
         db.session.add(user)
         db.session.commit()
         flash(
-            f"Account created for {form.nickname.data}! You can now log in.", "success"
+            f"Account created for {form.username.data}! You can now log in.", "success"
         )
         return redirect(url_for(".login"))
     return render_template("registration.html", title="Register", form=form)

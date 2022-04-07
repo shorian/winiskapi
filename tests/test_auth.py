@@ -1,9 +1,11 @@
-import pytest
-from freezegun import freeze_time
 from datetime import datetime, timedelta
-from winiskapi.models import User
+
+import pytest
+from conftest import login, messages, register
 from flask_login import current_user
-from conftest import login, register, messages
+from freezegun import freeze_time
+
+from winiskapi.models import User
 
 
 @pytest.mark.usefixtures("client", "db_session")
@@ -18,11 +20,12 @@ class TestRegistration:
         response = register(client, email, "john", password)
         user = User.query.filter_by(email=email).first()
         assert response.status_code == 302
+        # Move this out to a TestUserModel function
         assert user.pw_hash != password
-        assert user.date_created is not None
+        assert user.created_at is not None
 
     def test_RegFailsForExistingUser(self, client):
-        response = register(client, "testuser@example.com", "alice", "alicespassword")
+        response = register(client, "test@example.com", "alice", "alicespassword")
         assert b"Email already in use." in response.data
 
 
@@ -74,14 +77,14 @@ class TestPasswordReset:
     def test_PostResetRequest(self, client):
         response = client.post(
             "/reset_password",
-            data={"email": "testuser@example.com"},
+            data={"email": "test@example.com"},
             follow_redirects=True,
         )
         assert b"If an account is associated with that email address" in response.data
         assert "reset your password" in messages[0]
 
     def test_GoodResetTokenSucceeds(self, client):
-        user = User.query.filter_by(email="testuser@example.com").first()
+        user = User.query.filter_by(email="test@example.com").first()
         token = user.generate_reset_token()
         assert user.reset_password(token, "my-new-password")
 
@@ -91,7 +94,7 @@ class TestPasswordReset:
 
     def test_ExpiredResetTokenFails(self, client):
         with freeze_time(datetime.now()) as current_time:
-            user = User.query.filter_by(email="testuser@example.com").first()
+            user = User.query.filter_by(email="test@example.com").first()
             token = user.generate_reset_token()
             current_time.tick(delta=timedelta(minutes=61))
             assert not user.reset_password(token, "my-new-password")

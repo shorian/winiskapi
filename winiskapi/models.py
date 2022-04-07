@@ -1,19 +1,60 @@
-from winiskapi import db, login_manager, argon2
+import sqlalchemy as sa
 from flask import current_app
 from flask_login import UserMixin
-from sqlalchemy.dialects.postgresql import UUID
-import uuid
 from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
-from datetime import datetime
+from slugify import slugify
+from sqlalchemy.dialects.postgresql import UUID
+from ulid import ULID
+
+from winiskapi import argon2, db, login_manager
 
 
-class User(UserMixin, db.Model):
+def ulid_as_uuid():
+    """Generate a ULID and store as UUID for use as a sortable primary key"""
+    ulid = ULID()
+    return ulid.to_uuid()
+
+
+def build_slug(context):
+    """Build a url slug using the contact's name and primary key.
+    Rebuild whenever the contact's name changes."""
+    pk = context.get_current_parameters()["id"]
+    pk = str(pk)[30:36]
+    name = context.get_current_parameters()["full_name"]
+    slug = slugify(
+        name, max_length=30, word_boundary=True, lowercase=False, allow_unicode=True
+    )
+    # "c" prefix guarantees uniqueness across tables
+    return f"c{pk}-{slug}"
+
+
+class TimestampsMixin:
+    """Mixin that defines timestamp columns."""
+
+    __abstract__ = True
+
+    created_at = sa.Column(
+        "created_at",
+        sa.TIMESTAMP(timezone=False),
+        default=sa.func.now(),
+        nullable=False,
+    )
+
+    updated_at = sa.Column(
+        "last_updated",
+        sa.TIMESTAMP(timezone=False),
+        default=sa.func.now(),
+        onupdate=sa.func.now(),
+        nullable=False,
+    )
+
+
+class User(UserMixin, db.Model, TimestampsMixin):
     __tablename__ = "users"
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=ulid_as_uuid)
     email = db.Column(db.String(160), unique=True, nullable=False, index=True)
-    nickname = db.Column(db.String(30))
+    username = db.Column(db.String(30), nullable=False)
     pw_hash = db.Column(db.String(), nullable=False)
-    date_created = db.Column(db.Date, default=datetime.today)
     contacts = db.relationship(
         "Contact",
         primaryjoin="User.id==Contact.owner_id",
@@ -56,7 +97,7 @@ class User(UserMixin, db.Model):
         return True
 
     def __repr__(self):
-        return f"User('{self.nickname}', '{self.email}'')"
+        return f"User('{self.username}', '{self.email}'')"
 
 
 @login_manager.user_loader
@@ -64,22 +105,24 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-class Contact(db.Model):
+class Contact(db.Model, TimestampsMixin):
     __tablename__ = "contacts"
     owner_id = db.Column(
         UUID(as_uuid=True),
         db.ForeignKey("users.id", use_alter=True, name="fk_contact_owner_id"),
     )
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    date_created = db.Column(db.Date, default=datetime.today)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=ulid_as_uuid)
+    slug = db.Column(db.String(40), default=build_slug, unique=True, nullable=False)
 
     surname = db.Column(db.String(30))
     given_name = db.Column(db.String(30))
     middle_name = db.Column(db.String(30))
     nickname = db.Column(db.String(30))
+    full_name = db.Column(db.String(90), nullable=False)
     picture = db.Column(db.String(16), nullable=False, default="default.png")
     dob = db.Column(db.Date())
-    # pronouns = db.Column(db.???()) Not sure what datatype pronouns should be. String? Enum? Array?)
+    gender = db.Column(db.Enum("U", "N", "M", "F", name="gender"), server_default="U")
+    pronouns = db.Column(db.ARRAY(db.String(15)))
     organization = db.Column(db.String(50))
-    occupation = db.Column(db.String(50))
-    food_preferences = db.Column(db.Text())
+    job_title = db.Column(db.String(50))
+    notes = db.Column(db.Text())

@@ -1,12 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField, EmailField
-from wtforms.validators import InputRequired, Email, Length, EqualTo, ValidationError
+from wtforms import BooleanField, EmailField, PasswordField, StringField, SubmitField
+from wtforms.validators import Email, EqualTo, InputRequired, Length, ValidationError
+
 from winiskapi.models import User
 
 
 class RegistrationForm(FlaskForm):
     email = EmailField("Email", validators=[InputRequired()])
-    nickname = StringField("Nickname", validators=[InputRequired(), Length(max=30)])
+    username = StringField("Username", validators=[InputRequired(), Length(max=30)])
     password = PasswordField("Password", validators=[InputRequired(), Length(min=6)])
     confirm_password = PasswordField(
         "Confirm Password", validators=[InputRequired(), EqualTo("password")]

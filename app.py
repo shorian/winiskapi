@@ -1,6 +1,7 @@
+import os
+
 from winiskapi import create_app, db
 from winiskapi.models import User
-import os
 
 app = create_app(os.getenv("FLASK_CONFIG") or "development")
 

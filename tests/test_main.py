@@ -1,4 +1,5 @@
 from flask import current_app
+
 from winiskapi import create_app
 
 
