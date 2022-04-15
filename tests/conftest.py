@@ -70,12 +70,9 @@ class UserFactory:
 class ContactFactory:
     def __init__(self, complete=False, **kwargs):
         """Generate random contact attributes.
-        Set complete=True to generate all contact attributes.
-        Include keyword arguments to manually set contact attributes.
-        If passing kwargs, 'complete' must be set explicitly.
+        Set an attribute manually with a keyword argument.
         At least one user must exist in the db before creating a contact.
         """
-        # self.owner_id = User.query.order_by(func.random()).first()
         self.owner_id = User.query.filter_by(email="test@example.com").first().id
         self.given_name = fake.first_name()
         self.full_name = self.given_name
@@ -103,7 +100,6 @@ class ContactFactory:
 
     def create(self):
         """Commit to the db, and return the contact object."""
-        # contact = Contact(owner_id=self.owner_id, given_name=self.given_name, full_name=self.full_name)
         contact = Contact(**self.__dict__)
         db.session.add(contact)
         db.session.commit()

@@ -5,4 +5,5 @@
 */__pycache__/
 *.pyc
 /winiskapi/static/winiskapilogo.svg
-/winiskapi/instance/
+/node_modules/
+/winiskapi/static/dist/
