@@ -24,8 +24,7 @@ def build_slug(context):
     slug = slugify(
         name, max_length=30, word_boundary=True, lowercase=False, allow_unicode=True
     )
-    # "c" prefix guarantees uniqueness across tables
-    return f"c{pk}-{slug}"
+    return f"{pk}-{slug}"
 
 
 class TimestampsMixin:
@@ -35,14 +34,14 @@ class TimestampsMixin:
 
     created_at = sa.Column(
         "created_at",
-        sa.TIMESTAMP(timezone=False),
+        sa.TIMESTAMP(timezone=True),
         default=sa.func.now(),
         nullable=False,
     )
 
     updated_at = sa.Column(
         "last_updated",
-        sa.TIMESTAMP(timezone=False),
+        sa.TIMESTAMP(timezone=True),
         default=sa.func.now(),
         onupdate=sa.func.now(),
         nullable=False,

@@ -2,7 +2,7 @@
   "name": "winiskapi",
   "version": "0.0.1",
   "description": "Winiskapi, a personal CRM",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "start": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,12 +15,19 @@
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@babel/runtime": "^7.17.9",
     "babel-loader": "^8.2.4",
-    "formik": "^2.2.9",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-formal": "^2.5.0",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2",
     "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "eslint": "^8.13.0",
+    "eslint-plugin-react": "^7.29.4"
   }
 }

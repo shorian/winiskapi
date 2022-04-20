@@ -1,1 +1,6 @@
 {% extends "base.html" %}
+{% block content %}
+<h1>Create New Contact</h1>
+<div id="root"></div>
+<script src={{ url_for("static", filename="dist/bundle.js") }} async defer></script>
+{% endblock %}

@@ -2,9 +2,9 @@ const path = require('path');
 
 module.exports = {
     mode: "development",
-    entry: "winiskapi/static/src",
+    entry: "./src",
     output: {
-        path:path.resolve(__dirname, "winiskapi/static/dist"),
+        path:path.resolve(__dirname, "dist"),
         filename: "bundle.js"
     },
     watch: true,
@@ -14,7 +14,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(jsx|js)$/,
+                test: /\.(js|jsx)$/,
                 include: path.resolve(__dirname, 'src'),
                 exclude: /node_modules/,
                 use: [{
@@ -24,7 +24,10 @@ module.exports = {
                             ['@babel/preset-env', {
                                 "targets": "defaults"
                             }],
-                            '@babel/preset-react'
+                            '@babel/preset-react',
+                        ],
+                        plugins: [
+                            '@babel/plugin-proposal-optional-chaining'
                         ]
                     }
                 }]
