@@ -4,14 +4,14 @@
      <form method="POST" action="">
 	 	{{ form.hidden_tag() }}
         <fieldset class="form-group">
-     		<legend class="border-bottom mt-4 mb-4">Register</legend>
+     		<legend class="border-bottom my-4 h2">Register</legend>
             {{ render_field(form.email) }}
             {{ render_field(form.username) }}
             {{ render_field(form.password) }}
             {{ render_field(form.confirm_password) }}
         </fieldset>
         <div class="form-group">
-	 		{{ form.submit(class="btn btn-outline-info") }}
+	 		{{ form.submit(class="btn btn-info") }}
 	 	</div>
      </form>
 {% endblock content %}

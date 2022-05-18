@@ -16,7 +16,7 @@
 	 <header class="site-header">
          <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
              <div class="container">
-                 <a class="navbar-brand mr-4" href="/">Winiskapi</a>
+                 <a class="navbar-brand mr-4" href="/"><h2 class="my-0">Winiskapi</h2></a>
                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                      <span class="navbar-toggler-icon"></span>
                  </button>
@@ -39,9 +39,9 @@
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
                         {% for category, message in messages %}
-                            <div class="alert alert-{{ category }} alert-dismissible">
+                            <div class="alert alert-{{ category }} alert-dismissible my-3 p-2">
                                 {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{#                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
                             </div>
                         {% endfor %}
                     {% endif %}

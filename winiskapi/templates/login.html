@@ -4,6 +4,7 @@
      <form method="POST" action="">
 	 	{{ form.hidden_tag() }}
         <fieldset class="form-group">
+            <legend class="border-bottom my-4 h2">Log In</legend>
             {{ render_field(form.email) }}
             {{ render_field(form.password) }}
             <div class="form-check">
@@ -12,7 +13,7 @@
             </div>
         </fieldset>
         <div class="form-group">
-	 		{{ form.submit(class="btn btn-outline-info") }}
+	 		{{ form.submit(class="btn btn-info") }}
 	 	</div>
      </form>
 {% endblock content %}

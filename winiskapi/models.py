@@ -3,7 +3,7 @@ from flask import current_app
 from flask_login import UserMixin
 from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 from slugify import slugify
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import JSONB, UUID
 from ulid import ULID
 
 from winiskapi import argon2, db, login_manager
@@ -125,3 +125,23 @@ class Contact(db.Model, TimestampsMixin):
     organization = db.Column(db.String(50))
     job_title = db.Column(db.String(50))
     notes = db.Column(db.Text())
+
+    contact_info = db.relationship(
+        "ContactInfo",
+        primaryjoin="Contact.id==ContactInfo.contact_id",
+        cascade="all,delete,delete-orphan",
+    )
+
+
+class ContactInfo(db.Model):
+    __tablename__ = "contact_info"
+    owner_id = db.Column(
+        UUID(as_uuid=True),
+        db.ForeignKey("users.id", use_alter=True, name="fk_info_owner_id"),
+    )
+    id = db.Column(db.Integer, primary_key=True)
+    contact_id = db.Column(
+        UUID(as_uuid=True), db.ForeignKey("contacts.id"), nullable=False
+    )
+    section = db.Column(db.String(30), nullable=False)
+    data = db.Column(JSONB(), nullable=False)
