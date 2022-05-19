@@ -74,14 +74,12 @@ class ContactFactory:
         At least one user must exist in the db before creating a contact.
         """
         self.owner_id = User.query.filter_by(email="test@example.com").first().id
-        self.given_name = fake.first_name()
-        self.full_name = self.given_name
+        self.first_name = fake.first_name()
 
         if complete:
-            self.surname = fake.last_name()
+            self.last_name = fake.last_name()
             self.middle_name = fake.first_name()
             self.nickname = fake.first_name()
-            self.full_name = f"{self.given_name} {self.middle_name} {self.surname}"
             self.dob = fake.date_of_birth()
             self.gender = fake.random_element(elements=("U", "M", "F", "N"))
             self.pronouns = fake.random_element(

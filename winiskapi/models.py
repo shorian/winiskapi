@@ -113,11 +113,10 @@ class Contact(db.Model, TimestampsMixin):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=ulid_as_uuid)
     slug = db.Column(db.String(40), default=build_slug, unique=True, nullable=False)
 
-    surname = db.Column(db.String(30))
-    given_name = db.Column(db.String(30))
+    first_name = db.Column(db.String(30), nullable=False)
     middle_name = db.Column(db.String(30))
+    last_name = db.Column(db.String(30))
     nickname = db.Column(db.String(30))
-    full_name = db.Column(db.String(90), nullable=False)
     picture = db.Column(db.String(16), nullable=False, default="default.png")
     dob = db.Column(db.Date())
     gender = db.Column(db.Enum("U", "N", "M", "F", name="gender"), server_default="U")
