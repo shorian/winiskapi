@@ -125,22 +125,22 @@ class Contact(db.Model, TimestampsMixin):
     job_title = db.Column(db.String(50))
     notes = db.Column(db.Text())
 
-    contact_info = db.relationship(
-        "ContactInfo",
-        primaryjoin="Contact.id==ContactInfo.contact_id",
+    contact_fields = db.relationship(
+        "ContactFields",
+        primaryjoin="Contact.id==ContactFields.contact_id",
         cascade="all,delete,delete-orphan",
     )
 
 
-class ContactInfo(db.Model):
-    __tablename__ = "contact_info"
+class ContactFields(db.Model):
+    __tablename__ = "contact_fields"
     owner_id = db.Column(
         UUID(as_uuid=True),
-        db.ForeignKey("users.id", use_alter=True, name="fk_info_owner_id"),
+        db.ForeignKey("users.id", use_alter=True, name="fk_field_owner_id"),
     )
     id = db.Column(db.Integer, primary_key=True)
     contact_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("contacts.id"), nullable=False
     )
     section = db.Column(db.String(30), nullable=False)
-    data = db.Column(JSONB(), nullable=False)
+    value = db.Column(JSONB(), nullable=False)
