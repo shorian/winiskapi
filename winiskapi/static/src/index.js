@@ -5,14 +5,10 @@ import {createRoot} from "react-dom/client";
 import Form, {useFormValues} from "react-formal"
 
 const contactSchema = yup.object({
-                    firstName: yup.string().max(30),
+                    firstName: yup.string().max(30).required("First name is required."),
                     middleName: yup.string().max(30),
                     lastName: yup.string().max(30),
                     nickname: yup.string().max(30),
-                    fullName: yup.string()
-                        .required("At least one name is required.")
-                        .max(90),
-
                     birthday: yup.date().max(new Date(), "Date of birth must be in the past."),
                     pronouns: yup.string(),
                     gender: yup.string().oneOf(["U", "N", "M", "F"]),
@@ -25,15 +21,6 @@ const handleSubmit = (formData) => {
   alert(JSON.stringify(formData, null, 2));
 };
 
-const Names = () => {
-    let names = useFormValues(["firstName", "middleName", "lastName"]).filter(Boolean).join(" ");
-    if (names === "") {
-        names = useFormValues("nickname")
-    }
-    return (
-        <span>{names}</span>
-    );
-};
 
 const mySubmit = () => <button type="submit" className="btn btn-primary m-2">Submit</button>
 
@@ -59,8 +46,6 @@ const contactForm = <Form schema={contactSchema} setter="fullName" onSubmit={han
                 <Form.Field name="nickname" className="form-control"/>
             </label>
         </div>
-        <Form.Field name="fullName" as="span" mapFromValue={Names} />
-        <span><small>Their full name will be displayed as <Names/>. Is that correct?</small></span>
     </fieldset>
     <fieldset>
         <legend>Personal details</legend>
