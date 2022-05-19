@@ -9,12 +9,12 @@ def test_AppExists():
 
 def test_ConfigIsTesting(client):
     with client:
-        assert current_app.config["TESTING"] == True
+        assert current_app.config["TESTING"]
 
 
 def test_DefaultConfigIsDev():
     app = create_app()
-    assert app.config["DEBUG"] == True and app.config["SECRET_KEY"] == "my dev key"
+    assert app.config["DEBUG"] and app.config["SECRET_KEY"] == "my dev key"
 
 
 def test_HomeRouteExists(client):
