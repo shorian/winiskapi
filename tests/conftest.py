@@ -117,17 +117,6 @@ def login(client, email="test@example.com", password="test-password", remember=F
     return response
 
 
-def register(client, email, username, password):
-    reg_data = {
-        "email": email,
-        "username": username,
-        "password": password,
-        "confirm_password": password,
-    }
-    response = client.post("/register", data=reg_data)
-    return response
-
-
 class DummySMTP:
     def __init__(self, host, port):
         self.host = host

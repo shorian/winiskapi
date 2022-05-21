@@ -1,11 +1,6 @@
-from datetime import datetime, timedelta
-
 import pytest
-from conftest import login, messages, register
+from conftest import UserFactory, login, messages
 from flask_login import current_user
-from freezegun import freeze_time
-
-from winiskapi.models import User
 
 
 @pytest.mark.usefixtures("client", "db_session")
@@ -15,17 +10,25 @@ class TestRegistration:
 
     def test_RegistrationSucceeds(self, client):
         """Registration succeeds with valid input, returns redirect, user is in database"""
-        email = "john@example.com"
-        password = "123456"
-        response = register(client, email, "john", password)
-        user = User.query.filter_by(email=email).first()
+        user = UserFactory()
+        reg_data = {
+            "email": user.email,
+            "username": user.username,
+            "password": user.password,
+            "confirm_password": user.password,
+        }
+        response = client.post("/register", data=reg_data)
         assert response.status_code == 302
-        # Move this out to a TestUserModel function
-        assert user.pw_hash != password
-        assert user.created_at is not None
 
-    def test_RegFailsForExistingUser(self, client):
-        response = register(client, "test@example.com", "alice", "alicespassword")
+    def test_RegFailsIfEmailInUse(self, client):
+        user = UserFactory(email="test@example.com")
+        reg_data = {
+            "email": user.email,
+            "username": user.username,
+            "password": user.password,
+            "confirm_password": user.password,
+        }
+        response = client.post("/register", data=reg_data)
         assert b"Email already in use." in response.data
 
 
@@ -42,9 +45,8 @@ class TestLogin:
 
     def test_LoginFailsWithBadEmail(self, client):
         with client:
-            response = login(
-                client, email="notauser@example.com", password="my_password"
-            )
+            user = UserFactory()
+            response = login(client, user.email, user.password)
             assert (
                 b"Invalid email or password." in response.data
                 and not current_user.is_authenticated
@@ -82,23 +84,3 @@ class TestPasswordReset:
         )
         assert b"If an account is associated with that email address" in response.data
         assert "reset your password" in messages[0]
-
-    def test_GoodResetTokenSucceeds(self, client):
-        user = User.query.filter_by(email="test@example.com").first()
-        token = user.generate_reset_token()
-        assert user.reset_password(token, "my-new-password")
-
-        with client:
-            login(client, password="my-new-password")
-            assert current_user.is_authenticated
-
-    def test_ExpiredResetTokenFails(self, client):
-        with freeze_time(datetime.now()) as current_time:
-            user = User.query.filter_by(email="test@example.com").first()
-            token = user.generate_reset_token()
-            current_time.tick(delta=timedelta(minutes=61))
-            assert not user.reset_password(token, "my-new-password")
-
-        with client:
-            login(client, password="my-new-password")
-            assert not current_user.is_authenticated
