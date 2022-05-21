@@ -20,9 +20,13 @@ def build_slug(context):
     Rebuild whenever the contact's name changes."""
     pk = context.get_current_parameters()["id"]
     pk = str(pk)[30:36]
-    name = context.get_current_parameters()["full_name"]
+    names = [
+        context.get_current_parameters().get(key)
+        for key in ["first_name", "middle_name", "last_name", "nickname"]
+    ]
+    names = " ".join(filter(None, names))
     slug = slugify(
-        name, max_length=30, word_boundary=True, lowercase=False, allow_unicode=True
+        names, max_length=30, word_boundary=True, lowercase=False, allow_unicode=True
     )
     return f"{pk}-{slug}"
 
