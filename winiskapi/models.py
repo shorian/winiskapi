@@ -130,13 +130,13 @@ class Contact(db.Model, TimestampsMixin):
     notes = db.Column(db.Text())
 
     contact_fields = db.relationship(
-        "ContactFields",
-        primaryjoin="Contact.id==ContactFields.contact_id",
+        "ContactField",
+        primaryjoin="Contact.id==ContactField.contact_id",
         cascade="all,delete,delete-orphan",
     )
 
 
-class ContactFields(db.Model):
+class ContactField(db.Model):
     __tablename__ = "contact_fields"
     owner_id = db.Column(
         UUID(as_uuid=True),

@@ -1,8 +1,8 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from "react";
 import * as yup from "yup"
-import * as axios from "axios";
 import {createRoot} from "react-dom/client";
-import Form, {useFormValues} from "react-formal"
+import Form from "react-formal"
 
 const contactSchema = yup.object({
                     firstName: yup.string().max(30).required("First name is required."),

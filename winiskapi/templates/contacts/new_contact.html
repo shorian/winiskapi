@@ -2,5 +2,5 @@
 {% block content %}
 <legend class="border-bottom my-4 h2">Create New Contact</legend>
 <div id="root"></div>
-<script src={{ url_for("static", filename="dist/bundle.js") }} async defer></script>
+<script type="module" src={{ url_for("static", filename="dist/bundle.js") }}></script>
 {% endblock %}
