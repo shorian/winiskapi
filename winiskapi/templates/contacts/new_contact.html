@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<legend class="border-bottom my-4 h2">Create New Contact</legend>
 <div id="root"></div>
+<input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
 <script type="module" src={{ url_for("static", filename="dist/bundle.js") }}></script>
 {% endblock %}

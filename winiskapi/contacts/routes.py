@@ -4,7 +4,7 @@ from flask_login import login_required
 contacts = Blueprint("contacts", __name__, url_prefix="/contacts")
 
 
-@contacts.route("/new")  # methods=["GET","POST"]
+@contacts.route("/new", methods=["GET", "POST"])
 @login_required
 def new():
     return render_template("contacts/new_contact.html")
