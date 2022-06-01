@@ -141,6 +141,7 @@ class ContactField(db.Model):
     owner_id = db.Column(
         UUID(as_uuid=True),
         db.ForeignKey("users.id", use_alter=True, name="fk_field_owner_id"),
+        nullable=False,
     )
     id = db.Column(db.Integer, primary_key=True)
     contact_id = db.Column(

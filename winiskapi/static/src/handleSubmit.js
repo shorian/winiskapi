@@ -1,12 +1,12 @@
 
-function handleSubmit (values, {setSubmitting}) {
-                    const url = '/'
+const handleSubmit = (formData) => {
+                    const url = '/contacts/new'
                     const requestOptions = {
                         method: 'POST',
                         redirect: "follow",
                         headers: {'Content-Type': 'application/json',
                         "X-CSRFToken": document.getElementById("csrf_token").value},
-                        body: JSON.stringify({values})
+                        body: JSON.stringify({formData})
                     };
                     fetch(url, requestOptions)
                         .then(response => {
@@ -15,7 +15,6 @@ function handleSubmit (values, {setSubmitting}) {
                             }
                         })
                         .catch(error => console.log('Form submit error', error))
-                    setSubmitting(false);
-                }
+                        }
 
 export default handleSubmit

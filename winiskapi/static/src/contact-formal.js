@@ -1,46 +1,47 @@
 import React from "react";
 import Form from "react-formal";
-import contactSchema from "./contactSchema";
+import {contactSchema} from "./contactSchema";
+import handleSubmit from "./handleSubmit";
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-const handleSubmit = (formData) => {
-  alert(JSON.stringify(formData, null, 2));
-};
+// const handleSubmit = (formData) => {
+//   alert(JSON.stringify(formData, null, 2));
+// };
+//
+// let cid = 0;
 
-
-
-const ContactForm = <Form schema={contactSchema} onSubmit={handleSubmit}>
+const ContactForm = <Form schema={contactSchema} submitForm={handleSubmit} defaultValue={{contact_info: [{id: cid, type: ""}]}}>
     <legend className="mt-4 h2 text-center">Create New Contact</legend>
     <fieldset className="border border-primary rounded mt-2 px-4 pb-3">
         <legend className="w-auto px-2">Name</legend>
         <div className="d-flex justify-content-between">
             <label className="form-label mr-2">
                 First name<span className="text-primary">*</span>
-                <Form.Field name="name.first" className="form-control"/>
+                <Form.Field name="first_name" className="form-control"/>
             </label>
             <label className="form-label mr-2">
                 Middle name
-                <Form.Field name="name.middle" className="form-control"/>
+                <Form.Field name="middle_name" className="form-control"/>
             </label>
             <label className="form-label mr-2">
                 Last name
-                <Form.Field name="name.last" className="form-control"/>
+                <Form.Field name="last_name" className="form-control"/>
             </label>
             <label className="form-label mr-2">
                 Nickname
-                <Form.Field name="name.nickname" className="form-control"/>
+                <Form.Field name="nickname" className="form-control"/>
             </label>
         </div>
-        <div><Form.Message for={["name.first", "name.middle", "name.last", "name.nickname",]}>
+        <div><Form.Message for={["first_name", "middle_name", "last_name", "name.nickname",]}>
             {errors => <span>{errors.pop()}</span>}
         </Form.Message></div>
     </fieldset>
     <div className="d-flex justify-content-between">
         <fieldset className="border border-primary rounded mt-2 px-4 pb-3">
             <legend className="w-auto px-2">Personal details</legend>
-            <div className="d-flex flex-column justify-content-between flex-fill"><label className="form-label mr-2">
+            <div className="d-flex justify-content-between flex-fill"><label className="form-label mr-2">
                 Birthday
-                <Form.Field name="birthday" className="form-control"/>
+                <Form.Field name="dob" className="form-control"/>
             </label>
                 <label className="form-label mr-2">
                     Pronouns
@@ -60,27 +61,28 @@ const ContactForm = <Form schema={contactSchema} onSubmit={handleSubmit}>
                         <option value="N">Nonbinary</option>
                     </Form.Field>
                 </label></div>
-            <div><Form.Message for={["birthday", "pronouns", "gender"]}>
+            <div><Form.Message for={["dob", "pronouns", "gender"]}>
                 {errors => <span>{errors.pop()}</span>}
             </Form.Message></div>
         </fieldset>
         <fieldset className="border border-primary rounded mt-2 px-4 pb-3">
             <legend className="w-auto px-2">Work</legend>
-            <div className="d-flex flex-column flex-fill justify-content-between">
+            <div className="d-flex flex-fill justify-content-between">
                 <label className="form-label mr-2">
                     Organization
                     <Form.Field name="organization" className="form-control"/>
                 </label>
                 <label className="form-label mr-2">
                     Role
-                    <Form.Field name="role" className="form-control"/>
+                    <Form.Field name="job_title" className="form-control"/>
                 </label>
             </div>
-            <div><Form.Message for={["organization", "role"]}>
+            <div><Form.Message for={["organization", "job_title"]}>
                 {errors => <span>{errors.pop()}</span>}
             </Form.Message></div>
         </fieldset>
     </div>
+
 
     <div className="d-flex justify-content-center"><Form.Submit type="submit" className="btn btn-lg btn-primary my-3 px-4 text-center">Submit</Form.Submit></div>
 </Form>;
