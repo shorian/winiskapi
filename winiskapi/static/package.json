@@ -12,7 +12,6 @@
   "author": "shorian",
   "license": "",
   "dependencies": {
-    "@hookform/resolvers": "^2.8.10",
     "axios": "^0.26.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
