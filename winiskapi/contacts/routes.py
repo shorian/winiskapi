@@ -11,6 +11,12 @@ contacts = Blueprint("contacts", __name__, url_prefix="/contacts")
 @login_required
 def new():
     if request.method == "POST":
+        # form_data = request.json["formData"]
+        # if form_data["contact_info"]:
+        #   contact_info = form_data.pop("contact_info")
+        #   for i in contact_info:
+        #       add that info to the db, with appropriate destructuring
+        # and so on for other contact fields, until only attributes belonging to the contact table proper are left
         contact = Contact(owner_id=current_user.get_id(), **request.json["formData"])
         db.session.add(contact)
         db.session.commit()
