@@ -127,7 +127,7 @@ class Contact(db.Model, TimestampsMixin):
     pronouns = db.Column(db.ARRAY(db.String(15)))
     organization = db.Column(db.String(50))
     job_title = db.Column(db.String(50))
-    notes = db.Column(db.Text())
+    bio = db.Column(db.Text())
 
     contact_fields = db.relationship(
         "ContactField",

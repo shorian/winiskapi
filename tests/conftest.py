@@ -91,7 +91,7 @@ class ContactFactory:
             )
             self.organization = fake.company()
             self.job_title = fake.job()
-            self.notes = fake.paragraph()
+            self.bio = fake.paragraph()
 
         for key in kwargs:
             setattr(self, key, kwargs[key])

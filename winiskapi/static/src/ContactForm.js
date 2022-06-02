@@ -8,9 +8,8 @@ import handleSubmit from "./handleSubmit";
 //   alert(JSON.stringify(formData, null, 2));
 // };
 //
-// let cid = 0;
 
-const ContactForm = <Form schema={contactSchema} submitForm={handleSubmit} defaultValue={{contact_info: [{id: cid, type: ""}]}}>
+const ContactForm = <Form schema={contactSchema} submitForm={handleSubmit}>
     <legend className="mt-4 h2 text-center">Create New Contact</legend>
     <fieldset className="border border-primary rounded mt-2 px-4 pb-3">
         <legend className="w-auto px-2">Name</legend>
@@ -32,7 +31,7 @@ const ContactForm = <Form schema={contactSchema} submitForm={handleSubmit} defau
                 <Form.Field name="nickname" className="form-control"/>
             </label>
         </div>
-        <div><Form.Message for={["first_name", "middle_name", "last_name", "name.nickname",]}>
+        <div><Form.Message for={["first_name", "middle_name", "last_name", "nickname",]}>
             {errors => <span>{errors.pop()}</span>}
         </Form.Message></div>
     </fieldset>
