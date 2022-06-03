@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for contact in contacts.items %}
+        <a href="{{ url_for("contacts.view_contact", slug=contact.slug) }}"><h2>{{ contact.full_name() }}</h2></a>
+    {% endfor %}
+{% endblock %}

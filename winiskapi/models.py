@@ -43,7 +43,7 @@ class TimestampsMixin:
         nullable=False,
     )
 
-    updated_at = sa.Column(
+    last_updated = sa.Column(
         "last_updated",
         sa.TIMESTAMP(timezone=True),
         default=sa.func.now(),
@@ -115,7 +115,13 @@ class Contact(db.Model, TimestampsMixin):
         db.ForeignKey("users.id", use_alter=True, name="fk_contact_owner_id"),
     )
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=ulid_as_uuid)
-    slug = db.Column(db.String(40), default=build_slug, unique=True, nullable=False)
+    slug = db.Column(
+        db.String(40),
+        default=build_slug,
+        onupdate=build_slug,
+        unique=True,
+        nullable=False,
+    )
 
     first_name = db.Column(db.String(30), nullable=False)
     middle_name = db.Column(db.String(30))
@@ -134,6 +140,14 @@ class Contact(db.Model, TimestampsMixin):
         primaryjoin="Contact.id==ContactField.contact_id",
         cascade="all,delete,delete-orphan",
     )
+
+    def full_name(self):
+        full_name = " ".join(
+            filter(None, [self.first_name, self.middle_name, self.last_name])
+        )
+        if self.nickname:
+            full_name += f" ({self.nickname})"
+        return full_name
 
 
 class ContactField(db.Model):
