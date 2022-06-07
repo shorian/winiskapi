@@ -4,7 +4,7 @@
   "description": "Winiskapi, a personal CRM",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --config webpack.config.js",
+    "start": "webpack --config ./webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "proxy": "localhost:5000",
@@ -13,7 +13,7 @@
   "license": "",
   "dependencies": {
     "axios": "^0.26.1",
-    "prettier": "^2.6.2",
+    "bootstrap": "^5.2.0-beta1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-formal": "^2.5.0",
@@ -27,12 +27,21 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.17.9",
+    "autoprefixer": "^10.4.7",
     "babel-loader": "^8.2.4",
     "eslint": "^8.13.0",
+    "eslint-import-resolver-webpack": "^0.13.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "postcss": "^8.4.14",
+    "postcss-loader": "^7.0.0",
+    "prettier": "^2.6.2",
+    "sass": "^1.52.2",
+    "sass-loader": "^13.0.0",
+    "stylelint": "^14.8.5",
+    "stylelint-config-twbs-bootstrap": "^4.0.0",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2"
   }

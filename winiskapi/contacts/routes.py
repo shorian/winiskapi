@@ -40,4 +40,4 @@ def new():
 @login_required
 def view_contact(slug):
     contact = Contact.query.filter_by(slug=slug).one_or_none()
-    return render_template("contacts/view_contact.html", contact=contact)
+    return render_template("contacts/contact_profile.html", contact=contact)

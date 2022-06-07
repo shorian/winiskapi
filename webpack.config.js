@@ -2,9 +2,9 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./src",
+  entry: "./winiskapi/static/src/index.js",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "/winiskapi/static/dist"),
     filename: "bundle.js",
   },
   watch: true,
@@ -14,8 +14,32 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(scss)$/,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: () => {
+                  [require("autoprefixer")];
+                },
+              },
+            },
+          },
+          {
+            loader: "sass-loader",
+          },
+        ],
+      },
+      {
         test: /\.(js|jsx)$/,
-        include: path.resolve(__dirname, "src"),
+        include: path.resolve(__dirname, "winiskapi/static/src"),
         exclude: /node_modules/,
         use: [
           {

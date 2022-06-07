@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-<div id="root">
-<h2>{{ contact.full_name() }}</h2>
-<span>{{ contact.dob }} {{ contact.pronouns }} {{ contact.gender }} {{ contact.organization }} {{ contact.job_title }}</span>
-</div>
-<input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
-{% endblock %}

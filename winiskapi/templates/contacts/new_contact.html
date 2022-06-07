@@ -2,5 +2,4 @@
 {% block content %}
 <div id="root"></div>
 <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
-<script type="module" src={{ url_for("static", filename="dist/bundle.js") }}></script>
 {% endblock %}

@@ -7,5 +7,4 @@
 /winiskapi/static/winiskapilogo.svg
 /node_modules/
 /winiskapi/static/dist/
-/winiskapi/static/package-lock.json
-/winiskapi/static/node_modules/
+/package-lock.json

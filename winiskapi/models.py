@@ -127,7 +127,7 @@ class Contact(db.Model, TimestampsMixin):
     middle_name = db.Column(db.String(30))
     last_name = db.Column(db.String(30))
     nickname = db.Column(db.String(30))
-    picture = db.Column(db.String(16), nullable=False, default="default.png")
+    picture = db.Column(db.String(16), nullable=False, default="default.svg")
     dob = db.Column(db.Date())
     gender = db.Column(db.Enum("U", "N", "M", "F", name="gender"), server_default="U")
     pronouns = db.Column(db.ARRAY(db.String(15)))
@@ -141,13 +141,15 @@ class Contact(db.Model, TimestampsMixin):
         cascade="all,delete,delete-orphan",
     )
 
-    def full_name(self):
+    def get_full_name(self):
         full_name = " ".join(
             filter(None, [self.first_name, self.middle_name, self.last_name])
         )
         if self.nickname:
             full_name += f" ({self.nickname})"
         return full_name
+
+    full_name = property(get_full_name)
 
 
 class ContactField(db.Model):
