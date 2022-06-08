@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href={{ url_for("static", filename="bootstrap.min.css") }}>
+    <link rel="stylesheet" href={{ url_for("static", filename="dist/main.css") }}>
 
     {% if title %}
         <title>Winiskapi - {{ title }}</title>
@@ -14,31 +14,30 @@
 <body>
 <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-        <div class="container-fluid">
+        <div class="container">
             <a class="navbar-brand" href="/"><h2 class="my-0">Winiskapi</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Navbar Right Side -->
-            <div id="navbarNav" class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                {% if current_user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Contacts
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ url_for('contacts.new') }}">New Contact</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('contacts.directory') }}">Directory</a></li>
-                    </ul>
-                    </li>
-                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Log out</a>
-                    {#	                  <a class="nav-item nav-link" href="{{ url_for('auth.account') }}">Account</a>#}
-                {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Log in</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
-                {% endif %}
-            </ul>
+            <div id="navbarNav" class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item dropdown bg-primary">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Contacts
+                            </a>
+                            <ul class="dropdown-menu bg-primary text-center shadow-none border-0 rounded-0 rounded-bottom" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{ url_for('contacts.new') }}">New Contact</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('contacts.directory') }}">Directory</a></li>
+                            </ul>
+                        </li>
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Log out</a>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Log in</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </nav>

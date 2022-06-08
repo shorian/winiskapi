@@ -2,6 +2,7 @@ import React from "react";
 import Form from "react-formal";
 import { contactSchema } from "./contactSchema";
 import handleSubmit from "./handleSubmit";
+import { createRoot } from "react-dom/client";
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 // const handleSubmit = (formData) => {
@@ -12,8 +13,8 @@ import handleSubmit from "./handleSubmit";
 const ContactForm = (
   <Form schema={contactSchema} submitForm={handleSubmit}>
     <legend className="mt-4 h2 text-center">Create New Contact</legend>
-    <fieldset className="border border-primary rounded mt-2 px-4 pb-3">
-      <legend className="w-auto px-2">Name</legend>
+    <fieldset className="border border-primary rounded m-2 px-4 pb-3">
+      <legend>Name</legend>
       <div className="d-flex justify-content-between">
         <label className="form-label mr-2">
           First name<span className="text-primary">*</span>
@@ -41,8 +42,8 @@ const ContactForm = (
       </div>
     </fieldset>
     <div className="d-flex justify-content-between">
-      <fieldset className="border border-primary rounded mt-2 px-4 pb-3">
-        <legend className="w-auto px-2">Personal details</legend>
+      <fieldset className="border border-primary rounded m-2 px-4 pb-3">
+        <legend>Personal details</legend>
         <div className="d-flex justify-content-between flex-fill">
           <label className="form-label mr-2">
             Birthday
@@ -73,8 +74,8 @@ const ContactForm = (
           </Form.Message>
         </div>
       </fieldset>
-      <fieldset className="border border-primary rounded mt-2 px-4 pb-3">
-        <legend className="w-auto px-2">Work</legend>
+      <fieldset className="border border-primary rounded m-2 px-4 pb-3">
+        <legend>Work</legend>
         <div className="d-flex flex-fill justify-content-between">
           <label className="form-label mr-2">
             Organization
@@ -104,4 +105,8 @@ const ContactForm = (
   </Form>
 );
 
-export default ContactForm;
+const container = document.getElementById("contact-form");
+if (container) {
+  const root = createRoot(container);
+  root.render(ContactForm);
+}

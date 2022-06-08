@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-    <div id="root" class="row border">
-        <img src="{{ url_for("static", filename="assets/contact_photos/" + contact.picture) }}" alt="Picture of {{ contact.first_name }}" title="Picture of {{ contact.first_name }}" class="col col-2 p-2 pl-3">
+    <div id="contact-profile" class="row border">
+        <img src="{{ url_for("static", filename="images/contact_photos/" + contact.picture) }}" alt="Picture of {{ contact.first_name }}" title="Picture of {{ contact.first_name }}" class="col col-2 p-2 pl-3">
         <div class="col d-flex flex-column ">
-            <h2 class="row align-items-end justify-content-center flex-shrink-1 h-50 my-0 py-3">{{ contact.full_name }}</h2>
+            <h2 class="row align-items-end justify-content-center flex-shrink-1 h-50 my-0 py-2">{{ contact.full_name }}</h2>
 
             <div class="row text-center px-2 pb-2">
                 {% if contact.bio %}
                     {{ contact.bio }}
                 {% endif %}
             </div>
-            <div class="row mt-auto justify-content-center pb-4">
+            <div class="row mt-auto justify-content-center">
                 {% if contact.job_title and contact.organization %}
                     {{ contact.job_title }} at {{ contact.organization }}
                 {% elif contact.job_title %}

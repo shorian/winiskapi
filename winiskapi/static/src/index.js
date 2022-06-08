@@ -1,12 +1,3 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import ContactForm from "./ContactForm";
+import "./ContactForm";
 import "bootstrap";
-
-function App() {
-  return ContactForm;
-}
-
-const container = document.getElementById("root");
-const root = createRoot(container);
-root.render(<App />);
+import "./_custom.scss";

@@ -1,30 +1,36 @@
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development",
   entry: "./winiskapi/static/src/index.js",
   output: {
-    path: path.resolve(__dirname, "/winiskapi/static/dist"),
+    path: path.resolve(__dirname + "/winiskapi/static/dist"),
     filename: "bundle.js",
   },
   watch: true,
   watchOptions: {
     ignored: "./node_modules",
   },
+  plugins: [new MiniCssExtractPlugin()],
   module: {
     rules: [
       {
         test: /\.(scss)$/,
         use: [
           {
-            loader: "style-loader",
+            loader: MiniCssExtractPlugin.loader,
           },
           {
             loader: "css-loader",
+            options: {
+              sourceMap: false,
+            },
           },
           {
             loader: "postcss-loader",
             options: {
+              sourceMap: false,
               postcssOptions: {
                 plugins: () => {
                   [require("autoprefixer")];
@@ -34,6 +40,9 @@ module.exports = {
           },
           {
             loader: "sass-loader",
+            options: {
+              sourceMap: false,
+            },
           },
         ],
       },
