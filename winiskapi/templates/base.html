@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href={{ url_for("static", filename="dist/main.css") }}>
 
+    <link rel="icon" type="image/png" sizes="32x32" href={{ url_for("static", filename="images/favicon/favicon-32x32.png") }}>
+    <link rel="icon" type="image/png" sizes="16x16" href={{ url_for("static", filename="images/favicon/favicon-16x16.png") }}>
+    <link rel="mask-icon" color="#5bbad5" href={{ url_for("static", filename="images/favicon/safari-pinned-tab.svg") }}>
+    <link rel="shortcut icon" href={{ url_for("static", filename="images/favicon/favicon.ico")}}>
+
+    {% include "icons.html" %}
+
     {% if title %}
         <title>Winiskapi - {{ title }}</title>
     {% else %}
@@ -13,9 +20,11 @@
 </head>
 <body>
 <header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary py-1">
         <div class="container">
-            <a class="navbar-brand" href="/"><h2 class="my-0">Winiskapi</h2></a>
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='images/winiskapiwhite.svg') }}" alt="" width="40" height="40" class="d-inline mt-n2 text-white">
+                <h2 class="my-0 d-inline">Winiskapi</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,13 +37,22 @@
                                 Contacts
                             </a>
                             <ul class="dropdown-menu bg-primary text-center shadow-none border-0 rounded-0 rounded-bottom" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ url_for('contacts.new') }}">New Contact</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('contacts.new') }}">New Contact
+                                </a></li>
                                 <li><a class="dropdown-item" href="{{ url_for('contacts.directory') }}">Directory</a></li>
                             </ul>
                         </li>
-                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Log out</a>
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}" aria-label="Log Out">
+                            <svg width="24" height="24" class="bi align-top" aria-hidden="true">
+                                <use xlink:href="#logout"></use>
+                            </svg>
+                        </a>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Log in</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}" aria-label="Log In">
+                            <svg width="24" height="24" class="bi align-top" aria-hidden="true">
+                                <use xlink:href="#login"></use>
+                            </svg>
+                        </a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
                     {% endif %}
                 </ul>
@@ -50,7 +68,7 @@
                     {% for category, message in messages %}
                         <div class="alert alert-{{ category }} alert-dismissible my-3 p-1">
                             {{ message }}
-                            <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close">✖</button>
+                            <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endfor %}
                 {% endif %}
