@@ -2,37 +2,44 @@
 {% block content %}
     <div id="contact-profile" class="row border">
         <img src="{{ url_for("static", filename="images/contact_photos/" + contact.picture) }}" alt="Picture of {{ contact.first_name }}" title="Picture of {{ contact.first_name }}" class="col col-2 p-2 pl-3">
-        <div class="col d-flex flex-column ">
-            <h2 class="row align-items-end justify-content-center flex-shrink-1 h-50 my-0 py-2">{{ contact.full_name }}</h2>
+        <div class="col d-flex flex-column">
+            <h2 class="row align-items-end justify-content-center flex-shrink-1 h-50 mt-0 mb-2">{{ contact.full_name }}</h2>
 
-            <div class="row text-center px-2 pb-2">
+            <div class="row text-center mx-2 pb-2 position-relative">
+                <svg width="16" height="16" class="bi position-absolute top-0 end-0 w-auto p-0 opacity-25 mx-n2" aria-hidden="true">
+                                <use xlink:href="#edit"></use>
+                            </svg>
                 {% if contact.bio %}
                     {{ contact.bio }}
+                    {% else %}
+                    <em class="text-muted">Add description...</em>
                 {% endif %}
             </div>
-            <div class="row mt-auto justify-content-center">
+            <div class="row mt-auto justify-content-center text-center">
                 {% if contact.job_title and contact.organization %}
                     {{ contact.job_title }} at {{ contact.organization }}
                 {% elif contact.job_title %}
                     {{ contact.job_title }}
                 {% elif contact.organization %}
                     Works at {{ contact.organization }}
+                {% else %}
+                    <em class="text-muted">Add work information...</em>
                 {% endif %}
             </div>
         </div>
-        <div class="col col-2 d-flex flex-column">
-            <ul class="list-group my-auto">
+    </div>
+        <div class="col d-flex flex-column">
+            <ul class="breadcrumb my-auto">
                 {% if contact.dob %}
-                    <li class="list-group-item">Birthday: {{ contact.dob }}</li>
+                    <li class="breadcrumb-item">Birthday: {{ contact.dob }}</li>
                 {% endif %}
                 {% if contact.pronouns %}
-                    <li class="list-group-item">{{ contact.pronouns }}</li>
+                    <li class="breadcrumb-item">{{ contact.pronouns }}</li>
                 {% endif %}
                 {% if contact.gender != "U" %}
-                    <li class="list-group-item">{{ contact.gender }}</li>
+                    <li class="breadcrumb-item">{{ contact.gender }}</li>
                 {% endif %}
             </ul>
         </div>
-    </div>
     <input type="hidden" name="csrf_token" id="csrf_token" value="{{ csrf_token() }}"/>
 {% endblock %}
