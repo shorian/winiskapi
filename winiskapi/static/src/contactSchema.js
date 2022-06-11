@@ -22,8 +22,7 @@ const contactSchema = yup.object({
   nickname: yup.string().max(30, "Names must be 30 characters or less").trim(),
   dob: yup.date().max(new Date(), "Date of birth must be in the past"),
   pronouns: yup.string().oneOf(["", "he", "she", "they"]),
-  gender: yup.string().oneOf(["U", "N", "M", "F"]),
-
+  gender: yup.string().max(30, "Gender must be 30 characters or less").trim(),
   organization: yup
     .string()
     .max(50, "Organization must be 50 characters or less")

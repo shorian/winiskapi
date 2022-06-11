@@ -129,7 +129,7 @@ class Contact(db.Model, TimestampsMixin):
     nickname = db.Column(db.String(30))
     picture = db.Column(db.String(16), nullable=False, default="default.svg")
     dob = db.Column(db.Date())
-    gender = db.Column(db.Enum("U", "N", "M", "F", name="gender"), server_default="U")
+    gender = db.Column(db.String(30))
     pronouns = db.Column(db.ARRAY(db.String(15)))
     organization = db.Column(db.String(50))
     job_title = db.Column(db.String(50))

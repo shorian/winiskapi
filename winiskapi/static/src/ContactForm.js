@@ -61,10 +61,10 @@ const ContactForm = (
           <label className="form-label mr-2">
             Gender
             <Form.Field name="gender" as="select" className="form-control">
-              <option value="U"></option>
-              <option value="M">Male</option>
-              <option value="F">Female</option>
-              <option value="N">Nonbinary</option>
+              <option value=""></option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Nonbinary</option>
             </Form.Field>
           </label>
         </div>

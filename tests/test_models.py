@@ -52,7 +52,7 @@ class TestUserModel:
         user = UserFactory().create()
         now = datetime.now(timezone.utc)
         assert (now - user.created_at).total_seconds() < 2
-        assert (now - user.updated_at).total_seconds() < 2
+        assert (now - user.last_updated).total_seconds() < 2
 
 
 @pytest.mark.usefixtures("client")
@@ -69,4 +69,4 @@ class TestContactModel:
         contact = ContactFactory().create()
         now = datetime.now(timezone.utc)
         assert (now - contact.created_at).total_seconds() < 2
-        assert (now - contact.updated_at).total_seconds() < 2
+        assert (now - contact.last_updated).total_seconds() < 2

@@ -1,4 +1,3 @@
-import pytest
 from conftest import ContactFactory, login
 
 
@@ -7,7 +6,6 @@ def test_GetNewContact(client):
     assert client.get("/contacts/new").status_code == 200
 
 
-@pytest.mark.xfail
 def test_GetContactPage(client):
     login(client)
     contact = ContactFactory().create()

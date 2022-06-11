@@ -81,7 +81,9 @@ class ContactFactory:
             self.middle_name = fake.first_name()
             self.nickname = fake.first_name()
             self.dob = fake.date_of_birth()
-            self.gender = fake.random_element(elements=("U", "M", "F", "N"))
+            self.gender = fake.random_element(
+                elements=("", "Male", "Female", "Nonbinary")
+            )
             self.pronouns = fake.random_element(
                 elements=(
                     ["he", "him", "his", "his", "himself"],
