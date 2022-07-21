@@ -13,7 +13,6 @@ auth = Blueprint("auth", __name__)
 def register():  # put application's code here
     form = RegistrationForm()
     if form.validate_on_submit():
-        # noinspection PyArgumentList
         user = User(
             email=form.email.data,
             username=form.username.data,
@@ -32,7 +31,7 @@ def register():  # put application's code here
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(email=form.email.data).one_or_none()
         if user and user.verify_password(form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get("next")
@@ -57,7 +56,7 @@ def reset_request():
         return redirect(url_for("main.home"))
     form = RequestResetForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(email=form.email.data).one_or_none()
         if user:
             token = user.generate_reset_token()
             mail.send(

@@ -1,7 +1,5 @@
 from flask import Flask
 from flask_argon2 import Argon2
-
-# from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_redmail import RedMail
@@ -15,7 +13,6 @@ login_manager = LoginManager()
 login_manager.login_view = "auth.login"
 mail = RedMail()
 csrf = CSRFProtect()
-# debug_toolbar = DebugToolbarExtension()
 
 
 def create_app(cfg="development"):
@@ -30,7 +27,6 @@ def create_app(cfg="development"):
     login_manager.init_app(app)
     mail.init_app(app)
     csrf.init_app(app)
-    # debug_toolbar.init_app(app)
 
     from winiskapi.auth.routes import auth
     from winiskapi.contacts.routes import contacts
