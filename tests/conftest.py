@@ -21,7 +21,6 @@ def app():
         db.create_all()
 
         # seed with a user
-        # noinspection PyArgumentList
         user = User(
             email="test@example.com",
             username="testuser",

@@ -33,9 +33,9 @@
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:bbox-paths="false"
      inkscape:zoom="1.0356019"
-     inkscape:cx="165.12136"
-     inkscape:cy="239.47426"
-     inkscape:window-width="1922"
+     inkscape:cx="164.63855"
+     inkscape:cy="238.50864"
+     inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="1913"
      inkscape:window-y="41"
@@ -64,28 +64,28 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <ellipse
+       style="fill:#b84627;fill-opacity:0.50403225;stroke:none;stroke-width:3.96875;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path1256"
+       clip-path="url(#clipPath2390)"
+       transform="matrix(1,0,0,0.96774192,0,2.1508085)"
+       ry="52.916664"
+       rx="46.301998"
+       cy="125.67708"
+       cx="66.145828" />
     <circle
-       style="fill:#82c4cf;fill-opacity:1;stroke:#257e8c;stroke-width:3.85315;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#b84627;stroke-width:2;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path848"
        r="64.219254"
        cy="66.145828"
        cx="66.145836" />
     <circle
-       style="fill:#d4907d;fill-opacity:1;stroke:#6e2a17;stroke-width:3.91338;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#b84627;fill-opacity:0.5;stroke:none;stroke-width:3.91338;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path971"
        cx="66.145828"
-       cy="45.508339"
+       cy="42.333336"
        r="26.089144"
        inkscape:transform-center-y="5.6813428e-06"
        inkscape:transform-center-x="-1.4070829e-06" />
-    <ellipse
-       style="fill:#b84627;fill-opacity:1;stroke:#6e2a17;stroke-width:3.96875;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path1256"
-       cx="66.145828"
-       cy="125.67708"
-       rx="46.302078"
-       ry="52.916664"
-       clip-path="url(#clipPath2390)"
-       transform="matrix(1,0,0,0.96774192,0,4.2674753)" />
   </g>
 </svg>
