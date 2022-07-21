@@ -10,7 +10,7 @@ auth = Blueprint("auth", __name__)
 
 
 @auth.route("/register", methods=["GET", "POST"])
-def register():  # put application's code here
+def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(
@@ -24,7 +24,7 @@ def register():  # put application's code here
             f"Account created for {form.username.data}! You can now log in.", "success"
         )
         return redirect(url_for(".login"))
-    return render_template("registration.html", title="Register", form=form)
+    return render_template("auth/registration.html", title="Register", form=form)
 
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -39,7 +39,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for("main.home"))
         else:
             flash("Invalid email or password.")
-    return render_template("login.html", form=form)
+    return render_template("auth/login.html", form=form)
 
 
 @auth.route("/logout")
@@ -69,7 +69,7 @@ def reset_request():
             "If an account is associated with that email address, we'll send a password reset link shortly."
         )
         return redirect(url_for("auth.login"))
-    return render_template("reset_request.html", title="Reset Password", form=form)
+    return render_template("auth/reset_request.html", title="Reset Password", form=form)
 
 
 @auth.route("/reset_password/<token>", methods=["GET", "POST"])
@@ -85,4 +85,4 @@ def password_reset(token):
         else:
             flash("message")
             return redirect(url_for("main.home"))
-    return render_template("reset_password.html")
+    return render_template("auth/reset_password.html")
